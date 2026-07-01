@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snapmoo Photobooth Tegal — Studio Foto & Photobooth</title>
+  <meta name="description" content="Snapmoo Photobooth Tegal — Studio fotografi dan photobooth profesional di Jl. Pancasila, Tegal. Buka setiap Jumat–Minggu." />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy:   #0d1b2a;
+      --steel:  #1b3a5c;
+      --sky:    #4a90b8;
+      --ice:    #a8c8e8;
+      --cream:  #f5f0eb;
+      --silver: #c8d4de;
+      --white:  #ffffff;
+      --gold:   #c4a15a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* ── NAV ── */
+    .navbar {
+      background: rgba(13, 27, 42, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(168,200,232,0.15);
+      padding: 1rem 0;
+      transition: all .3s;
+    }
+    .navbar-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white) !important;
+      letter-spacing: .04em;
+    }
+    .navbar-brand span { color: var(--sky); }
+    .nav-link {
+      color: var(--silver) !important;
+      font-size: .85rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-link:hover { color: var(--ice) !important; }
+    .navbar-toggler { border-color: rgba(168,200,232,.3); }
+    .navbar-toggler-icon { filter: invert(1); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(160deg, rgba(13,27,42,0.88) 0%, rgba(27,58,92,0.75) 60%, rgba(74,144,184,0.4) 100%),
+        url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1600&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,.015) 2px,
+        rgba(255,255,255,.015) 4px
+      );
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(74,144,184,.2);
+      border: 1px solid rgba(74,144,184,.5);
+      color: var(--ice);
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .35rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.0;
+      letter-spacing: -.01em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--sky);
+    }
+    .hero p {
+      color: var(--silver);
+      font-size: 1.05rem;
+      max-width: 480px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .btn-primary-custom {
+      background: var(--sky);
+      border: none;
+      color: var(--white);
+      padding: .75rem 2rem;
+      font-size: .85rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background .2s, transform .15s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary-custom:hover {
+      background: var(--steel);
+      transform: translateY(-2px);
+      color: var(--white);
+    }
+    .btn-outline-custom {
+      background: transparent;
+      border: 1px solid rgba(168,200,232,.5);
+      color: var(--ice);
+      padding: .75rem 2rem;
+      font-size: .85rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all .2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-outline-custom:hover {
+      border-color: var(--sky);
+      color: var(--sky);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--silver);
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--sky), transparent);
+      margin: .75rem auto 0;
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50% { opacity: .4; transform: scaleY(.6); }
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 6rem 0; }
+    .section-label {
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: .75rem;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-title em { font-style: italic; color: var(--steel); }
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: var(--sky);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-section { background: var(--white); }
+    .about-img-wrap {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .about-img-wrap img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+    }
+    .about-img-badge {
+      position: absolute;
+      bottom: 1.5rem;
+      right: -1.5rem;
+      background: var(--navy);
+      color: var(--ice);
+      padding: 1.25rem 1.5rem;
+      border-left: 3px solid var(--sky);
+      min-width: 160px;
+    }
+    .about-img-badge .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--sky);
+      line-height: 1;
+    }
+    .about-img-badge .lbl {
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--silver);
+    }
+    .about-text p {
+      color: #4a5568;
+      font-size: .97rem;
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+    .about-stat {
+      border-left: 2px solid var(--ice);
+      padding-left: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .about-stat .val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .about-stat .desc {
+      font-size: .8rem;
+      color: #718096;
+      letter-spacing: .05em;
+    }
+
+    /* ── SERVICES ── */
+    .services-section { background: var(--navy); }
+    .services-section .section-title { color: var(--white); }
+    .services-section .section-label { color: var(--sky); }
+    .services-section p.lead-text { color: var(--silver); font-size: .95rem; line-height: 1.8; }
+    .service-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(168,200,232,.12);
+      border-radius: 4px;
+      padding: 2rem 1.75rem;
+      height: 100%;
+      transition: all .3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--sky);
+      transition: height .35s;
+    }
+    .service-card:hover::before { height: 100%; }
+    .service-card:hover {
+      border-color: rgba(74,144,184,.3);
+      background: rgba(74,144,184,.06);
+      transform: translateY(-4px);
+    }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: rgba(74,144,184,.15);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.5rem;
+      color: var(--sky);
+    }
+    .service-card h4 {
+      color: var(--white);
+      font-size: 1.25rem;
+      margin-bottom: .6rem;
+    }
+    .service-card p {
+      color: var(--silver);
+      font-size: .88rem;
+      line-height: 1.75;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-section { background: var(--cream); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 12px;
+    }
+    .gallery-grid .g-item {
+      overflow: hidden;
+      border-radius: 3px;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-grid .g-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s;
+    }
+    .gallery-grid .g-item.tall img { height: 452px; }
+    .gallery-grid .g-item:hover img { transform: scale(1.06); }
+    .gallery-grid .g-item .overlay {
+      position: absolute; inset: 0;
+      background: rgba(13,27,42,.45);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .3s;
+    }
+    .gallery-grid .g-item:hover .overlay { opacity: 1; }
+    .overlay i { color: var(--white); font-size: 1.75rem; }
+    @media (max-width: 768px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid .g-item.tall img { height: 220px; }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── HOURS & LOCATION ── */
+    .info-section { background: var(--white); }
+    .info-card {
+      background: var(--navy);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      color: var(--white);
+      height: 100%;
+    }
+    .info-card h3 {
+      color: var(--ice);
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .85rem 0;
+      border-bottom: 1px solid rgba(168,200,232,.1);
+      font-size: .9rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { color: var(--silver); }
+    .hours-row .time { color: var(--ice); font-weight: 500; }
+    .hours-row .closed { color: #6b7280; font-style: italic; }
+    .badge-open {
+      background: rgba(74,144,184,.2);
+      color: var(--sky);
+      border: 1px solid rgba(74,144,184,.4);
+      font-size: .65rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .2rem .6rem;
+      border-radius: 2px;
+    }
+    .map-embed {
+      border-radius: 4px;
+      overflow: hidden;
+      height: 100%;
+      min-height: 360px;
+    }
+    .map-embed iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+      border: none;
+      display: block;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+      margin-bottom: 1.25rem;
+      font-size: .88rem;
+    }
+    .contact-item i {
+      color: var(--sky);
+      font-size: 1.1rem;
+      margin-top: .1rem;
+      flex-shrink: 0;
+    }
+    .contact-item span { color: var(--silver); line-height: 1.6; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background:
+        linear-gradient(135deg, rgba(13,27,42,0.95) 0%, rgba(27,58,92,0.9) 100%),
+        url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=1200&q=70') center/cover no-repeat;
+      text-align: center;
+      padding: 7rem 0;
+    }
+    .cta-section h2 {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .cta-section h2 em { color: var(--sky); }
+    .cta-section p {
+      color: var(--silver);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #070f18;
+      padding: 3.5rem 0 2rem;
+      border-top: 1px solid rgba(168,200,232,.08);
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--white);
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .footer-brand span { color: var(--sky); }
+    footer p.tagline {
+      color: #5a7a96;
+      font-size: .82rem;
+      letter-spacing: .05em;
+      margin-bottom: 1.5rem;
+    }
+    .footer-link {
+      display: block;
+      color: #5a7a96;
+      font-size: .85rem;
+      text-decoration: none;
+      margin-bottom: .5rem;
+      transition: color .2s;
+    }
+    .footer-link:hover { color: var(--ice); }
+    .footer-title {
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 1rem;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(168,200,232,.07);
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      color: #3a5468;
+      font-size: .78rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+    .social-btn {
+      width: 38px; height: 38px;
+      background: rgba(74,144,184,.12);
+      border: 1px solid rgba(74,144,184,.2);
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sky);
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all .2s;
+      margin-right: .4rem;
+    }
+    .social-btn:hover {
+      background: var(--sky);
+      color: var(--white);
+      border-color: var(--sky);
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+    .reveal-d4 { transition-delay: .4s; }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Snap<span>moo</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-1">
+          <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
+          <li class="nav-item"><a class="nav-link" href="#layanan">Layanan</a></li>
+          <li class="nav-item"><a class="nav-link" href="#galeri">Galeri</a></li>
+          <li class="nav-item"><a class="nav-link" href="#lokasi">Lokasi</a></li>
+          <li class="nav-item ms-2">
+            <a class="btn-primary-custom py-2 px-3" href="#lokasi">Kunjungi Kami</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="beranda">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="hero-badge">Studio Fotografi · Tegal, Jawa Tengah</div>
+          <h1>Abadikan <em>Momen</em><br>Terbaik Anda</h1>
+          <p>Snapmoo Photobooth hadir dengan konsep modern dan nuansa profesional untuk mengabadikan setiap momen berharga bersama orang-orang tercinta.</p>
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="#layanan" class="btn-primary-custom">Lihat Layanan</a>
+            <a href="#galeri" class="btn-outline-custom">Lihat Galeri</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      Scroll
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section class="about-section" id="tentang">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5 reveal">
+          <div class="about-img-wrap">
+            <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=800&q=80" alt="Snapmoo Studio" />
+            <div class="about-img-badge">
+              <div class="num">3+</div>
+              <div class="lbl">Tahun Berpengalaman</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7 about-text reveal reveal-d2">
+          <p class="section-label">Tentang Kami</p>
+          <h2 class="section-title">Studio Foto <em>Berkualitas</em><br>di Kota Tegal</h2>
+          <div class="divider"></div>
+          <p>Snapmoo Photobooth adalah studio fotografi modern yang berlokasi di jantung Kota Tegal. Kami menghadirkan pengalaman foto yang menyenangkan, penuh ekspresi, dan menghasilkan kenangan yang tak terlupakan.</p>
+          <p>Dengan peralatan mutakhir dan backdrop pilihan, setiap sesi foto dirancang untuk menangkap sisi terbaik Anda — baik untuk foto keluarga, pasangan, teman, maupun acara spesial.</p>
+          <div class="row mt-4">
+            <div class="col-sm-4">
+              <div class="about-stat">
+                <div class="val">500+</div>
+                <div class="desc">Pelanggan Puas</div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="about-stat">
+                <div class="val">10+</div>
+                <div class="desc">Pilihan Background</div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="about-stat">
+                <div class="val">3×</div>
+                <div class="desc">Buka per Minggu</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ── -->
+  <section class="services-section" id="layanan">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-6 reveal">
+          <p class="section-label">Layanan Kami</p>
+          <h2 class="section-title" style="color:var(--white)">Apa yang Kami <em style="color:var(--sky)">Tawarkan</em></h2>
+          <div class="divider mx-auto"></div>
+          <p class="lead-text">Nikmati berbagai pilihan layanan foto yang dirancang untuk kebutuhan Anda.</p>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3 reveal reveal-d1">
+          <div class="service-card">
+            <div class="service-icon"><i class="bi bi-camera2"></i></div>
+            <h4>Photobooth Klasik</h4>
+            <p>Sesi foto instan dengan berbagai pilihan prop menarik. Cetak langsung di tempat dalam hitungan menit.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 reveal reveal-d2">
+          <div class="service-card">
+            <div class="service-icon"><i class="bi bi-people-fill"></i></div>
+            <h4>Foto Grup & Keluarga</h4>
+            <p>Capture momen kebersamaan dengan setup khusus yang nyaman dan backdrop luas untuk keluarga besar.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 reveal reveal-d3">
+          <div class="service-card">
+            <div class="service-icon"><i class="bi bi-heart-fill"></i></div>
+            <h4>Foto Couple</h4>
+            <p>Sesi romantis untuk pasangan dengan backdrop estetik dan lighting khusus bernuansa intimate.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 reveal reveal-d4">
+          <div class="service-card">
+            <div class="service-icon"><i class="bi bi-stars"></i></div>
+            <h4>Tema Spesial</h4>
+            <p>Ulang tahun, wisuda, anniversary, atau acara komunitas — kami siap menyesuaikan dekorasi dan tema.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ── -->
+  <section class="gallery-section" id="galeri">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-6 reveal">
+          <p class="section-label">Galeri</p>
+          <h2 class="section-title">Momen yang <em>Kami Abadikan</em></h2>
+          <div class="divider"></div>
+        </div>
+        <div class="col-lg-6 d-flex align-items-end reveal reveal-d2">
+          <p class="text-muted mb-0" style="font-size:.9rem; line-height:1.8;">Setiap gambar menceritakan kisah. Inilah beberapa momen istimewa yang telah kami abadikan untuk pelanggan kami.</p>
+        </div>
+      </div>
+      <div class="gallery-grid reveal">
+        <div class="g-item tall" style="grid-row: span 2;">
+          <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=80" alt="Photobooth Portable 1" />
+          <div class="overlay"><i class="bi bi-zoom-in"></i></div>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=600&q=80" alt="Photobooth Portable 2" />
+          <div class="overlay"><i class="bi bi-zoom-in"></i></div>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80" alt="Photobooth Portable 3" />
+          <div class="overlay"><i class="bi bi-zoom-in"></i></div>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80" alt="Sesi Foto Selfie" />
+          <div class="overlay"><i class="bi bi-zoom-in"></i></div>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=600&q=80" alt="Foto Bersama" />
+          <div class="overlay"><i class="bi bi-zoom-in"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOURS & LOCATION ── -->
+  <section class="info-section" id="lokasi">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col reveal">
+          <p class="section-label">Jam Buka & Lokasi</p>
+          <h2 class="section-title">Temukan & <em>Kunjungi Kami</em></h2>
+          <div class="divider"></div>
+        </div>
+      </div>
+      <div class="row g-4">
+        <!-- Jam Operasional -->
+        <div class="col-lg-4 reveal reveal-d1">
+          <div class="info-card">
+            <h3>Jam Operasional</h3>
+            <div class="hours-row">
+              <span class="day">Senin</span>
+              <span class="closed">Tutup</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Selasa</span>
+              <span class="closed">Tutup</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Rabu</span>
+              <span class="closed">Tutup</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Kamis</span>
+              <span class="closed">Tutup</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Jumat <span class="badge-open ms-2">Buka</span></span>
+              <span class="time">18.00 – 22.00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Sabtu <span class="badge-open ms-2">Buka</span></span>
+              <span class="time">18.00 – 22.00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Minggu <span class="badge-open ms-2">Buka</span></span>
+              <span class="time">18.00 – 22.00</span>
+            </div>
+
+            <div class="mt-4 pt-2">
+              <h3 style="font-size:1.3rem; margin-bottom:1.25rem;">Hubungi Kami</h3>
+              <div class="contact-item">
+                <i class="bi bi-geo-alt-fill"></i>
+                <span>Jl. Pancasila, Panggung, Kec. Tegal Tim., Kota Tegal, Jawa Tengah 52122</span>
+              </div>
+              <div class="contact-item">
+                <i class="bi bi-whatsapp"></i>
+                <span><a href="https://wa.me/62895358966269" style="color:var(--ice); text-decoration:none;">0895-3589-66269</a></span>
+              </div>
+              <div class="contact-item">
+                <i class="bi bi-instagram"></i>
+                <span><a href="https://www.instagram.com/snapmoo.tgl" target="_blank" style="color:var(--ice); text-decoration:none;">@snapmoo.tgl</a></span>
+              </div>
+              <div class="contact-item">
+                <i class="bi bi-tiktok"></i>
+                <span><a href="https://www.tiktok.com/@snapmoo" target="_blank" style="color:var(--ice); text-decoration:none;">@snapmoo</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="col-lg-8 reveal reveal-d2">
+          <div class="map-embed">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.0!2d109.1398!3d-6.8694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6fb86ef1fbcfe3%3A0xa44b1d77fa2e3b49!2sJl.+Pancasila%2C+Panggung%2C+Kec.+Tegal+Tim.%2C+Kota+Tegal%2C+Jawa+Tengah+52122!5e0!3m2!1sid!2sid!4v1"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Lokasi Snapmoo Photobooth Tegal">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="row justify-content-center reveal">
+        <div class="col-lg-7">
+          <h2>Siap Abadikan <em>Momen Anda?</em></h2>
+          <p>Kunjungi kami setiap Jumat hingga Minggu mulai pukul 18.00 di Jl. Pancasila, Kota Tegal. Tidak perlu reservasi — langsung datang dan bersiaplah untuk sesi foto terbaik!</p>
+          <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="https://wa.me/62895358966269" class="btn-primary-custom">
+              <i class="bi bi-whatsapp me-2"></i>Chat via WhatsApp
+            </a>
+            <a href="https://www.instagram.com/snapmoo.tgl" target="_blank" class="btn-outline-custom">
+              <i class="bi bi-instagram me-2"></i>Follow Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="footer-brand">Snap<span>moo</span></div>
+          <p class="tagline">Photobooth & Studio Foto — Kota Tegal</p>
+          <p style="color:#3a5468; font-size:.84rem; line-height:1.75; margin-bottom:1.25rem;">
+            Mengabadikan setiap momen berharga dengan sentuhan profesional dan nuansa yang hangat.
+          </p>
+          <div>
+            <a href="https://www.instagram.com/snapmoo.tgl" target="_blank" class="social-btn"><i class="bi bi-instagram"></i></a>
+            <a href="https://wa.me/62895358966269" class="social-btn"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://www.tiktok.com/@snapmoo" target="_blank" class="social-btn"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-2 offset-lg-1">
+          <p class="footer-title">Navigasi</p>
+          <a href="#tentang" class="footer-link">Tentang Kami</a>
+          <a href="#layanan" class="footer-link">Layanan</a>
+          <a href="#galeri" class="footer-link">Galeri</a>
+          <a href="#lokasi" class="footer-link">Lokasi</a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <p class="footer-title">Jam Buka</p>
+          <p style="color:#3a5468; font-size:.84rem; line-height:2;">
+            Jumat &nbsp;&nbsp;— 18.00–22.00<br>
+            Sabtu &nbsp;&nbsp;— 18.00–22.00<br>
+            Minggu — 18.00–22.00
+          </p>
+        </div>
+        <div class="col-lg-2">
+          <p class="footer-title">Alamat</p>
+          <p style="color:#3a5468; font-size:.84rem; line-height:1.8;">
+            Jl. Pancasila, Panggung,<br>Kec. Tegal Tim.,<br>Kota Tegal 52122
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Snapmoo Photobooth Tegal. All rights reserved.</span>
+        <span>Dibuat dengan <i class="bi bi-heart-fill" style="color:var(--sky); font-size:.75rem;"></i> di Tegal</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Navbar shrink on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('.navbar');
+      if (window.scrollY > 60) {
+        nav.style.padding = '.6rem 0';
+        nav.style.boxShadow = '0 4px 24px rgba(0,0,0,.35)';
+      } else {
+        nav.style.padding = '1rem 0';
+        nav.style.boxShadow = 'none';
+      }
+    });
+
+    // Smooth active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(l => {
+        l.style.color = l.getAttribute('href') === '#' + current
+          ? 'var(--ice)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
